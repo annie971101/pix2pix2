@@ -46,11 +46,11 @@ def normalize(inimg, tgimg, height, width):
 	return inimg, tgimg
 
 #AUMENTACION DE DATOS 
-def random_jitter(inimg, tgimg):
+def randomm_jitter(inimg, tgimg):
 	inimg, tgimg = resize(inimg, tgimg, 286,286)
 	stacked_image = tf.stack([inimg, tgimg], axis=0)
 	cropped_image = tf.image.random_crop(stacked_image, size = [2, IMG_HEIGHT, IMG_WIDTH, 3])
-	inimg, tgimg = crooped_image[0], cropped_image[1]
+	inimg, tgimg = cropped_image[0], cropped_image[1]
 	if tf.random.uniform(()) > 5:
 		inimg = tf.image.flip_left_right(inimg)
 		tgimg = tf.image.flip_left_right(tgimg)
@@ -63,8 +63,8 @@ def load_image(filename, augment = True):
 	inimg, tgimg = resize(inimg, tgimg, IMG_HEIGHT, IMG_WIDTH)
 	
 	if augment:
-		inimg, tgimg = random_jitter(inimg, tgimg)
-	inimg, tgimg = normalize(inimg, tgimg)
+		inimg, tgimg = randomm_jitter(inimg, tgimg)
+	inimg, tgimg = normalize(inimg, tgimg, IMG_HEIGHT, IMG_WIDTH)
 	return inimg, tgimg
 
 def load_train_image(filname):
